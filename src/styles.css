@@ -1,5 +1,45 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: 0;
+  box-sizing: content-box;
+}
+
+.poster-slider {
+  margin: 50px auto;
+  border: 15px solid brown;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  width: 426px;
+  height: 640px;
+  > div {
+    display: grid;
+    width: 426px;
+    height: 640px;
+    grid-template-columns: max-content 1fr max-content;
+    grid-template-rows: auto;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      z-index: -1;
+      width: 426px;
+      height: 640px;
+    }
+  }
+  > div::before {
+    content: url("./assets/arrow_back.svg");
+
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  > div::after {
+    content: url("./assets/arrow_forward.svg");
+    grid-column: 3;
+    grid-row: 1;
+  }
 }
