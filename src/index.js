@@ -59,17 +59,20 @@ class PosterSlider {
 
     const navigationEl = this.docObj.createElement("div");
     navigationEl.classList.add("navigation");
+    navigationEl.addEventListener("click", this.navigate.bind(this));
     for (let i = 0; i < this.imgElementsArr.length; i++) {
       const buttonEl = this.docObj.createElement("button");
-      buttonEl.setAttribute("type", "radio");
+      buttonEl.setAttribute("type", "button");
       buttonEl.setAttribute("name", "nav-button");
       buttonEl.setAttribute("data-slider-id", `post-${i}`);
+
       navigationEl.appendChild(buttonEl);
     }
     posterFrameEl.appendChild(navigationEl);
 
     const parentEl = this.docObj.querySelector(this.options.parentSelector);
     parentEl.appendChild(posterFrameEl);
+    //posterFrameEl.addEventListener("click", this.navigate);
   }
 
   navigate(e) {

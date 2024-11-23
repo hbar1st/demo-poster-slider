@@ -6,13 +6,14 @@ import pic3 from "./assets/love-1125204_640.jpg";
 const images = [pic1, pic2, pic3];
 const altText = ["poster", "orange poster", "love poster"];
 const elementArr = [];
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 3; i++) {
   const imgEl = document.createElement("img");
   imgEl.setAttribute("src", images[i]);
   imgEl.setAttribute("alt", altText[i]);
   elementArr.push(imgEl);
 }
-new PosterSlider(document, elementArr);
+const p = new PosterSlider(document, elementArr);
+console.log(p);
 /**
 
 
