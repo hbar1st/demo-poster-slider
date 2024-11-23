@@ -15,12 +15,17 @@ class PosterSlider {
       width: "426px",
       height: "640px",
       parentSelector: "body",
+      slideTimer: 5000,
     };
     this.options = Object.assign(defaults, options);
     this.currentSlide = 0;
     this.init();
+    setInterval(this.startSlideShow, this.options.slideTimer);
   }
 
+  startSlideShow = () => {
+    this.slide(1);
+  };
   slide = (value) => {
     let targetSlide = this.currentSlide + value;
     if (targetSlide < 0) {
