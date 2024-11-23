@@ -17,8 +17,45 @@ class PosterSlider {
       parentSelector: "body",
     };
     this.options = Object.assign(defaults, options);
-
+    this.currentSlide = 0;
     this.init();
+  }
+
+  slide = (value) => {
+    console.log(value);
+
+    const posterElList = this.docObj.querySelectorAll(
+      `${this.options.parentSelector} .poster`
+    );
+    console.log(posterElList);
+    Object.values(posterElList).forEach((el) => {
+      if (
+        Number(el.getAttribute("id").slice(5)) ===
+        this.currentSlide + value
+      ) {
+        window.location.href = `#${el.getAttribute("id")}`;
+      }
+    });
+
+    if (value > 0 && this.currentSlide + value < this.imgElementsArr.length) {
+      this.currentSlide += value;
+    } else if (value < 0 && this.currentSlide + value >= 0) {
+      this.currentSlide += value;
+    }
+    this.syncNavigation();
+  };
+
+  syncNavigation() {
+    Object.values(this.navigationEl.children).forEach((button) => {
+      if (
+        Number(button.getAttribute("data-slider-id").slice(5)) ===
+        this.currentSlide
+      ) {
+        button.style.backgroundColor = "blue";
+      } else {
+        button.style.backgroundColor = "white";
+      }
+    });
   }
 
   init() {
@@ -33,9 +70,10 @@ class PosterSlider {
     )}" alt="slide back">`;
     backBtn.classList.add("back");
     posterFrameEl.appendChild(backBtn);
-    /*
-    backBtn.addEventListner("click", ()=>{ goBack(-1)})
-*/
+
+    backBtn.addEventListener("click", () => {
+      this.slide(-1);
+    });
 
     const sliderDiv = this.docObj.createElement("div");
     sliderDiv.classList.add("poster-slider");
@@ -43,6 +81,7 @@ class PosterSlider {
     for (let i = 0; i < this.imgElementsArr.length; i++) {
       this.imgElementsArr[i].setAttribute("data-slider-id", `post-${i}`);
       const spanEl = this.docObj.createElement("span");
+      spanEl.classList.add("poster");
       spanEl.setAttribute("id", `post-${i}`);
       spanEl.appendChild(this.imgElementsArr[i]);
       sliderDiv.appendChild(spanEl);
@@ -57,29 +96,36 @@ class PosterSlider {
       import.meta.url
     )}" alt="slide forward">`;
     forthBtn.classList.add("forth");
-
+    forthBtn.addEventListener("click", () => this.slide(1));
     posterFrameEl.appendChild(forthBtn);
 
-    const navigationEl = this.docObj.createElement("div");
-    navigationEl.classList.add("navigation");
-    navigationEl.addEventListener("click", this.navigate.bind(this));
+    this.navigationEl = this.docObj.createElement("div");
+    this.navigationEl.classList.add("navigation");
+    this.navigationEl.addEventListener("click", this.navigate.bind(this));
     for (let i = 0; i < this.imgElementsArr.length; i++) {
       const buttonEl = this.docObj.createElement("button");
       buttonEl.setAttribute("type", "button");
       buttonEl.setAttribute("name", "nav-button");
       buttonEl.setAttribute("data-slider-id", `post-${i}`);
-
-      navigationEl.appendChild(buttonEl);
+      if (i === 0) {
+        buttonEl.style.backgroundColor = "blue"; //first button initially blue background
+      }
+      this.navigationEl.appendChild(buttonEl);
     }
-    posterFrameEl.appendChild(navigationEl);
+    posterFrameEl.appendChild(this.navigationEl);
 
     const parentEl = this.docObj.querySelector(this.options.parentSelector);
     parentEl.appendChild(posterFrameEl);
-    //posterFrameEl.addEventListener("click", this.navigate);
   }
 
   navigate(e) {
-    console.log(e.target.getAttribute("data-slider-id"));
-    window.location.href = `#${e.target.getAttribute("data-slider-id")}`;
+    const id = e.target.getAttribute("data-slider-id");
+
+    if (id) {
+      window.location.href = `#${id}`;
+      this.currentSlide = Number(id.slice(5));
+    }
+
+    this.syncNavigation();
   }
 }
