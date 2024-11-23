@@ -42,7 +42,10 @@ class PosterSlider {
 
     for (let i = 0; i < this.imgElementsArr.length; i++) {
       this.imgElementsArr[i].setAttribute("data-slider-id", `post-${i}`);
-      sliderDiv.appendChild(this.imgElementsArr[i]);
+      const spanEl = this.docObj.createElement("span");
+      spanEl.setAttribute("id", `post-${i}`);
+      spanEl.appendChild(this.imgElementsArr[i]);
+      sliderDiv.appendChild(spanEl);
     }
 
     posterFrameEl.appendChild(sliderDiv);
@@ -76,6 +79,7 @@ class PosterSlider {
   }
 
   navigate(e) {
-    console.log(e.target);
+    console.log(e.target.getAttribute("data-slider-id"));
+    window.location.href = `#${e.target.getAttribute("data-slider-id")}`;
   }
 }
