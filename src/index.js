@@ -22,26 +22,23 @@ class PosterSlider {
   }
 
   slide = (value) => {
-    console.log(value);
+    let targetSlide = this.currentSlide + value;
+    if (targetSlide < 0) {
+      targetSlide = this.imgElementsArr.length - 1;
+    } else if (targetSlide === this.imgElementsArr.length) {
+      targetSlide = 0;
+    }
 
     const posterElList = this.docObj.querySelectorAll(
       `${this.options.parentSelector} .poster`
     );
-    console.log(posterElList);
     Object.values(posterElList).forEach((el) => {
-      if (
-        Number(el.getAttribute("id").slice(5)) ===
-        this.currentSlide + value
-      ) {
+      if (Number(el.getAttribute("id").slice(5)) === targetSlide) {
         window.location.href = `#${el.getAttribute("id")}`;
       }
     });
 
-    if (value > 0 && this.currentSlide + value < this.imgElementsArr.length) {
-      this.currentSlide += value;
-    } else if (value < 0 && this.currentSlide + value >= 0) {
-      this.currentSlide += value;
-    }
+    this.currentSlide = targetSlide;
     this.syncNavigation();
   };
 
