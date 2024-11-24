@@ -38,6 +38,7 @@
 
   & > .back,
   & > .forth {
+    background-color: transparent;
     grid-row: 2;
     position: relative;
     line-height: 0px;
@@ -47,7 +48,7 @@
     outline: none;
 
     &:hover {
-      background-color: rgba(231, 202, 207, .7);
+      background-color: rgb(227, 206, 210);
     }
   }
 
