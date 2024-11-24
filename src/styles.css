@@ -7,9 +7,9 @@
 :root {
   --poster-height: 640px;
   --aspect-ratio: 2 / 3;
-  --poster-width: clamp(300px, 426px, 426px);
-  --slider-margin: 50px auto 20px auto;
-  --slider-border: 15px solid brown;
+  --poster-width: clamp(300px, 426px, min(426px, 80vw));
+  --slider-margin: max(50px, 1vh) auto max(20px, 1vh) auto;
+  --slider-border: max(15px, 1vw) solid brown;
   --navigation-ball-background: linear-gradient(
     235deg,
     white 0%,
@@ -73,7 +73,6 @@
   flex-wrap: nowrap;
   overflow: hidden;
   width: var(--poster-width);
-  /*height: var(--poster-height);*/
   aspect-ratio: var(--aspect-ratio);
   grid-column: 2;
   grid-row: 2;
@@ -81,7 +80,6 @@
 
   img {
     width: var(--poster-width);
-    /*height: var(--poster-height);*/
     aspect-ratio: var(--aspect-ratio);
     position: relative;
   }
@@ -96,8 +94,8 @@
   justify-content: center;
   gap: 10px;
   button {
-    width: 12px;
-    height: 12px;
+    min-width: 12px;
+    aspect-ratio: 1;
     border-radius: 50%;
   }
 }
