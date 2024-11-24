@@ -16,9 +16,15 @@ class PosterSlider {
       height: "640px",
       parentSelector: "body",
       slideTimer: 5000,
+      "aspect-ratio": "2 / 3",
     };
     this.options = Object.assign(defaults, options);
+
     this.currentSlide = 0;
+    let root = this.docObj.documentElement;
+    root.style.setProperty("--poster-width", this.options.width);
+    root.style.setProperty("--aspect-ratio", this.options["aspect-ratio"]);
+
     this.init();
     setInterval(this.startSlideShow, this.options.slideTimer);
   }
@@ -26,6 +32,7 @@ class PosterSlider {
   startSlideShow = () => {
     this.slide(1);
   };
+
   slide = (value) => {
     let useScroll = true;
     let targetSlide = this.currentSlide + value;
@@ -117,7 +124,6 @@ class PosterSlider {
     this.navigationEl.addEventListener("click", this.navigate.bind(this));
 
     const parentEl = this.docObj.querySelector(this.options.parentSelector);
-
     for (let i = 0; i < this.imgElementsArr.length; i++) {
       const buttonEl = this.docObj.createElement("button");
       buttonEl.setAttribute("type", "button");
