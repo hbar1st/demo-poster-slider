@@ -27,11 +27,14 @@ class PosterSlider {
     this.slide(1);
   };
   slide = (value) => {
+    let useScroll = true;
     let targetSlide = this.currentSlide + value;
     if (targetSlide < 0) {
       targetSlide = this.imgElementsArr.length - 1;
+      useScroll = false;
     } else if (targetSlide === this.imgElementsArr.length) {
       targetSlide = 0;
+      useScroll = false;
     }
 
     const posterElList = this.docObj.querySelectorAll(
@@ -39,7 +42,11 @@ class PosterSlider {
     );
     Object.values(posterElList).forEach((el) => {
       if (Number(el.getAttribute("id").slice(5)) === targetSlide) {
-        el.scrollIntoView({ behavior: "smooth", inline: "start" });
+        if (useScroll) {
+          el.scrollIntoView({ behavior: "smooth", inline: "start" });
+        } else {
+          window.location.href = `#${el.getAttribute("id")}`;
+        }
       }
     });
 
