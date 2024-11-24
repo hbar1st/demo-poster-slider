@@ -6,7 +6,8 @@
 
 :root {
   --poster-height: 640px;
-  --poster-width: 426px;
+  --aspect-ratio: 2 / 3;
+  --poster-width: clamp(300px, 426px, 426px);
   --slider-margin: 50px auto 20px auto;
   --slider-border: 15px solid brown;
   --navigation-ball-background: linear-gradient(
@@ -21,6 +22,8 @@
   --nav-border-bottom-color: rgb(52, 8, 59);
   --nav-border-top-color: rgb(173, 145, 179);
   --nav-border-right-color: rgb(192, 133, 203);
+  --nav-button-hover-color: blue;
+  --nav-button-background-color: white;
 }
 
 .poster-frame {
@@ -48,7 +51,7 @@
     outline: none;
 
     &:hover {
-      background-color: rgb(227, 206, 210);
+      background-color: rgba(227, 206, 210, 0.5);
     }
   }
 
@@ -70,14 +73,16 @@
   flex-wrap: nowrap;
   overflow: hidden;
   width: var(--poster-width);
-  height: var(--poster-height);
+  /*height: var(--poster-height);*/
+  aspect-ratio: var(--aspect-ratio);
   grid-column: 2;
   grid-row: 2;
   position: relative;
 
   img {
     width: var(--poster-width);
-    height: var(--poster-height);
+    /*height: var(--poster-height);*/
+    aspect-ratio: var(--aspect-ratio);
     position: relative;
   }
 }
@@ -98,5 +103,5 @@
 }
 
 button:hover {
-  background-color: blue;
+  background-color: var(--nav-button-hover-color);
 }

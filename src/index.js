@@ -60,9 +60,13 @@ class PosterSlider {
         Number(button.getAttribute("data-slider-id").slice(5)) ===
         this.currentSlide
       ) {
-        button.style.backgroundColor = "blue";
+        button.style.backgroundColor = getComputedStyle(
+          button
+        ).getPropertyValue("--nav-button-hover-color");
       } else {
-        button.style.backgroundColor = "white";
+        button.style.backgroundColor = getComputedStyle(
+          button
+        ).getPropertyValue("--nav-button-background-color");
       }
     });
   }
@@ -111,19 +115,23 @@ class PosterSlider {
     this.navigationEl = this.docObj.createElement("div");
     this.navigationEl.classList.add("navigation");
     this.navigationEl.addEventListener("click", this.navigate.bind(this));
+
+    const parentEl = this.docObj.querySelector(this.options.parentSelector);
+
     for (let i = 0; i < this.imgElementsArr.length; i++) {
       const buttonEl = this.docObj.createElement("button");
       buttonEl.setAttribute("type", "button");
       buttonEl.setAttribute("name", "nav-button");
       buttonEl.setAttribute("data-slider-id", `post-${i}`);
       if (i === 0) {
-        buttonEl.style.backgroundColor = "blue"; //first button initially blue background
+        buttonEl.style.backgroundColor = getComputedStyle(
+          parentEl
+        ).getPropertyValue("--nav-button-hover-color");
       }
       this.navigationEl.appendChild(buttonEl);
     }
     posterFrameEl.appendChild(this.navigationEl);
 
-    const parentEl = this.docObj.querySelector(this.options.parentSelector);
     parentEl.appendChild(posterFrameEl);
   }
 
