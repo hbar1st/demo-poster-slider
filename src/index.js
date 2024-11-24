@@ -39,7 +39,7 @@ class PosterSlider {
     );
     Object.values(posterElList).forEach((el) => {
       if (Number(el.getAttribute("id").slice(5)) === targetSlide) {
-        window.location.href = `#${el.getAttribute("id")}`;
+        el.scrollIntoView({ behavior: "smooth", inline: "start" });
       }
     });
 
@@ -122,12 +122,10 @@ class PosterSlider {
 
   navigate(e) {
     const id = e.target.getAttribute("data-slider-id");
+    const el = this.docObj.querySelector(`#${id}`);
+    el.scrollIntoView({ behavior: "smooth", inline: "start" });
 
-    if (id) {
-      window.location.href = `#${id}`;
-      this.currentSlide = Number(id.slice(5));
-    }
-
+    this.currentSlide = Number(id.slice(5));
     this.syncNavigation();
   }
 }
